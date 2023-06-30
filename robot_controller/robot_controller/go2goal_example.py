@@ -5,11 +5,11 @@ from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String  # Standard ROS 2 String message
 
-from publisher_callback import publisher_callback
-from listener_callback import listener_callback,  listener_callback2
+from .publisher_callback import publisher_callback
+from .listener_callback import listener_callback,  listener_callback2
 
 
-from lidar import Lidar
+from .lidar import Lidar
 
 
 class TurtleController(Node):
@@ -19,11 +19,11 @@ class TurtleController(Node):
 
         self.vel_msg = Twist()
         self.goal = Point()
-        self.i = 0
+        self.stop = False
         self.current_point = 0
         self.returning = False
         self.point_list = []
-        self.return_list = [(0.0, 0.0)]
+        
         
         self.running = False
 

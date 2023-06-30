@@ -13,6 +13,7 @@ from cv_bridge import CvBridge  # Package to convert between ROS and OpenCV Imag
 import cv2  # OpenCV library
 
 
+
 class ImageSubscriber(Node):
     """
     Create an ImageSubscriber class, which is a subclass of the Node class.
@@ -33,11 +34,10 @@ class ImageSubscriber(Node):
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning
-
+        
         # Used to convert between ROS and OpenCV images
         self.br = CvBridge()
-        self.i = cv2.VideoWriter(
-            'frame.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 15, (640, 480))
+        self.i = cv2.VideoWriter('../visao_computacional/images/frame.mp4',cv2.VideoWriter_fourcc(*'mp4v'), 15, ( 640, 480))
 
     def listener_callback(self, data):
         """
@@ -49,18 +49,18 @@ class ImageSubscriber(Node):
         # Convert ROS Image message to OpenCV image
         current_frame = self.br.imgmsg_to_cv2(data)
         # Display image
-
-        # results = model.predict(current_frame, conf=0.6)
-        # save frame
-
-        # cv2.imwrite(f"../visao_computacional/images/frame.mp4",current_frame)
+        
+        #results = model.predict(current_frame, conf=0.6)
+        #save frame
+        
+        #cv2.imwrite(f"../visao_computacional/images/frame.mp4",current_frame)
         self.i.write(current_frame)
-
-        # log
+       
+        #log
         self.get_logger().info(f"frame{self.i} saved")
-        # image = base64.b64encode(results)
-        # i+=1
-        # requests.post("http://localhost:8000/images/add", json={"text": image.decode("utf-8"),"name":f"frame{i}"},headers={"Content-": "application/json","apikey":"apikey","authorization":"Bearer apikey"})
+        ##image = base64.b64encode(results)
+        ##i+=1
+            ##requests.post("http://localhost:8000/images/add", json={"text": image.decode("utf-8"),"name":f"frame{i}"},headers={"Content-": "application/json","apikey":"apikey","authorization":"Bearer apikey"})
 
 
 def main(args=None):
@@ -70,7 +70,7 @@ def main(args=None):
 
     # Create the node
     image_subscriber = ImageSubscriber()
-
+    
     # Spin the node so the callback function is called.
     rclpy.spin(image_subscriber)
 

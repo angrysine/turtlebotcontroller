@@ -1,4 +1,3 @@
-import requests
 import networkx as nx
 from networkx.algorithms.approximation import traveling_salesman_problem as tsp
 
@@ -22,7 +21,7 @@ def build_goals(data):
     for node_id in tsp(nx.Graph(graph)):
         for node in nodes:
             if node['id'] == node_id:
-                goals.append((node['x']/1000, node['y']/1000))
+                goals.append((node['x']/500, node['y']/500))
                 break
-    print("Goals: ",goals)
+    
     return goals

@@ -20,11 +20,17 @@ def check_reached_point( inc_x, inc_y,MAX_DIFF):
 
 def adjust_speed(node, angle_to_goal,MAX_DIFF):
     speed = Twist()
-    
-    if abs(angle_to_goal - node.theta) > MAX_DIFF:
-        speed.linear.x = 0.0
-        speed.angular.z = 0.3 if (angle_to_goal - node.theta) > 0.0 else -0.3
+    if not node.stop:
+        if abs(angle_to_goal - node.theta) > MAX_DIFF:
+            speed.linear.x = 0.0
+            speed.angular.z = 0.3 if (angle_to_goal - node.theta) > 0.0 else -0.3
+        else:
+            speed.linear.x = 0.1
+            speed.angular.z  =0.0
     else:
-        speed.linear.x = 0.1
+        speed.linear.x = 0.0
         speed.angular.z = 0.0
+        node.current_point = 0
+        node.running = False
+        node.stop = False
     return speed
